@@ -190,5 +190,72 @@ FROM retail_sales_clean;
 
 
 -- ============================================================
--- END OF SQL CLEANING AND BASIC ANALYSIS
+-- RETAIL SALES DATA ANALYSIS
+-- Business Questions
+-- ============================================================
+
+-- Q1. Which sales channel generates the highest total revenue?
+
+SELECT
+    Channel,
+    SUM(Revenue) AS Total_Revenue
+FROM retail_sales_clean
+GROUP BY Channel
+ORDER BY Total_Revenue DESC;
+
+
+-- Q2. Which top 3 categories generate the highest total profit?
+
+SELECT
+    Category,
+    SUM(Margin) AS Total_Profit
+FROM retail_sales_clean
+GROUP BY Category
+ORDER BY Total_Profit DESC
+LIMIT 3;
+
+
+-- Q3. Which categories have the highest and lowest profit margin percentage?
+
+SELECT
+    Category,
+    MIN("Margin_%") AS Lowest_Margin_Percent,
+    MAX("Margin_%") AS Highest_Margin_Percent
+FROM retail_sales_clean
+GROUP BY Category
+ORDER BY Highest_Margin_Percent DESC;
+
+
+-- Q4. Which month has the highest and lowest revenue?
+
+SELECT
+    SUBSTR(Invoice_Date, 1, 7) AS Month,
+    SUM(Revenue) AS Total_Revenue
+FROM retail_sales_clean
+GROUP BY Month
+ORDER BY Total_Revenue DESC;
+
+
+-- Q5. Do loyalty transactions generate more revenue and profit than non-loyalty transactions?
+
+SELECT
+    Loyalty_Flag,
+    SUM(Revenue) AS Total_Revenue,
+    SUM(Margin) AS Total_Profit
+FROM retail_sales_clean
+GROUP BY Loyalty_Flag
+ORDER BY Total_Revenue DESC;
+
+
+-- Q6. Which payment method generates the highest revenue?
+
+SELECT
+    Payment_Mode,
+    SUM(Revenue) AS Total_Revenue
+FROM retail_sales_clean
+GROUP BY Payment_Mode
+ORDER BY Total_Revenue DESC;
+
+-- ============================================================
+-- END OF SQL CLEANING AND BASIC DATA ANALYSIS
 -- ============================================================
